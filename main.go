@@ -28,24 +28,24 @@ func main() {
 			EnvVar: "PLUGIN_URL, RANCHER_URL",
 		},
 		cli.StringFlag{
-			Name:   "access-key",
-			Usage:  "rancher access key",
-			EnvVar: "PLUGIN_ACCESS_KEY, RANCHER_ACCESS_KEY",
+			Name:   "token",
+			Usage:  "rancher token",
+			EnvVar: "PLUGIN_TOKEN, RANCHER_TOKEN",
 		},
 		cli.StringFlag{
-			Name:   "secret-key",
-			Usage:  "rancher secret key",
-			EnvVar: "PLUGIN_SECRET_KEY, RANCHER_SECRET_KEY",
+			Name:   "project",
+			Usage:  "rancher project id (cxyz5:p-a1bc2)",
+			EnvVar: "PLUGIN_PROJECT, RANCHER_PROJECT",
 		},
 		cli.StringFlag{
-			Name:   "service",
-			Usage:  "Service to act on",
-			EnvVar: "PLUGIN_SERVICE",
+			Name:   "deployment",
+			Usage:  "Name of the kubernetes deployment",
+			EnvVar: "PLUGIN_DEPLOYMENT",
 		},
-		cli.StringSliceFlag{
-			Name:   "sidekick",
-			Usage:  "Service's sidekick name and image separated by the space, supports multiple flags",
-			EnvVar: "PLUGIN_SIDEKICK",
+		cli.StringFlag{
+			Name:   "namespace",
+			Usage:  "Namespace of the kubernetes deployment",
+			EnvVar: "PLUGIN_NAMESPACE",
 		},
 		cli.StringFlag{
 			Name:   "docker-image",
@@ -54,7 +54,7 @@ func main() {
 		},
 		cli.BoolTFlag{
 			Name:   "start-first",
-			Usage:  "Start new container before stoping old",
+			Usage:  "Start new container before stopping old",
 			EnvVar: "PLUGIN_START_FIRST",
 		},
 		cli.BoolFlag{
@@ -94,18 +94,18 @@ func main() {
 
 func run(c *cli.Context) error {
 	plugin := Plugin{
-		URL:                 c.String("url"),
-		Key:                 c.String("access-key"),
-		Secret:              c.String("secret-key"),
-		Service:             c.String("service"),
-		SidekickDockerImage: c.StringSlice("sidekick"),
-		DockerImage:         c.String("docker-image"),
-		StartFirst:          c.BoolT("start-first"),
-		Confirm:             c.Bool("confirm"),
-		Timeout:             c.Int("timeout"),
-		IntervalMillis:      c.Int64("interval-millis"),
-		BatchSize:           c.Int64("batch-size"),
-		YamlVerified:        c.BoolT("yaml-verified"),
+		URL:            c.String("url"),
+		Token:          c.String("token"),
+		Project:        c.String("project"),
+		Deployment:     c.String("deployment"),
+		Namespace:      c.String("namespace"),
+		DockerImage:    c.String("docker-image"),
+		StartFirst:     c.BoolT("start-first"),
+		Confirm:        c.Bool("confirm"),
+		Timeout:        c.Int("timeout"),
+		IntervalMillis: c.Int64("interval-millis"),
+		BatchSize:      c.Int64("batch-size"),
+		YamlVerified:   c.BoolT("yaml-verified"),
 	}
 	return plugin.Exec()
 }
