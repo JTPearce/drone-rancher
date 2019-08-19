@@ -13,6 +13,7 @@ FROM scratch
 ENV GODEBUG=netdns=go
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /go/src/drone-rancher/rancher.crt /etc/ssl/certs/
 
 LABEL org.label-schema.version=latest
 LABEL org.label-schema.vcs-url="https://github.com/JTPearce/drone-rancher.git"
